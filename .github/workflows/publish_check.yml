@@ -1,0 +1,50 @@
+# This action is meant to be triggered manually via the GitHub UI
+name: Cargo publish Check
+on:
+  push:
+    tags:
+      - "*" # Run this validation on release tags
+
+jobs:
+  release:
+    name: Run cargo-release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+      - name: Cache toolchain
+        uses: actions/cache@v1
+        with:
+          path: /usr/share/rust/.cargo
+          key: ${{ runner.os }}-rustup
+      - name: Cache cargo registry
+        uses: actions/cache@v1
+        with:
+          path: ~/.cargo/registry
+          key: ${{ runner.os }}-cargo-registry-${{ hashFiles('**/Cargo.toml') }}
+      - name: Cache cargo index
+        uses: actions/cache@v1
+        with:
+          path: ~/.cargo/git
+          key: ${{ runner.os }}-cargo-index-${{ hashFiles('**/Cargo.toml') }}
+      - name: Cache cargo build
+        uses: actions/cache@v1
+        with:
+          path: target
+          key: ${{ runner.os }}-cargo-build-target-${{ hashFiles('**/Cargo.toml') }}
+      - name: Install stable toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+      - name: Install cargo-release
+        run: cargo install cargo-release
+      - name: Release (Dry Run)
+        run: cargo release --allow-branch '*' --dry-run -v -p pravega-client-shared -p pravega-client-macros -p pravega-client-channel -p pravega-client-retry -p pravega-connection-pool -p pravega-client-config -p pravega-wire-protocol -p pravega-controller-client -p pravega-client-auth
+      - name: Release
+        run: cargo release --allow-branch '*' -x --no-confirm -v -p pravega-client-shared -p pravega-client-macros -p pravega-client-channel -p pravega-client-retry -p pravega-connection-pool -p pravega-client-config -p pravega-wire-protocol -p pravega-controller-client -p pravega-client-auth
+        env:
+          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
+
