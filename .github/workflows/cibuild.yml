@@ -73,6 +73,7 @@ jobs:
   codecoverage:
     runs-on: ubuntu-20.04
     name: codecov
+    needs: test_jest
     steps:
       - name: Run code cov
         run: |
