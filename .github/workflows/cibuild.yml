@@ -74,8 +74,10 @@ jobs:
     runs-on: ubuntu-20.04
     name: codecov
     needs: test_jest
+
     steps:
       - name: Run code cov
+        working-directory: ./
         run: |
           chmod +x ./.github/workflows/codecov/codecov.sh
           ./.github/workflows/codecov/codecov.sh
