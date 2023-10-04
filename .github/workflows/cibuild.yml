@@ -70,6 +70,10 @@ jobs:
           name: pravega-standalone-log
           path: pravega.log
           retention-days: 5
+  codecoverage:
+    runs-on: ubuntu-20.04
+    name: codecov
+    steps:
       - name: Run code cov
         run: |
           chmod +x ./.github/workflows/codecov/codecov.sh
