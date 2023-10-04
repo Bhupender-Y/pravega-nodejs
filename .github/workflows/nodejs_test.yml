@@ -53,10 +53,10 @@ jobs:
         with:
           node-version: ${{ matrix.node_version }}
       - name: Install modules
-        working-directory: ./nodejs
+        working-directory: ./
         run: npm i
       - name: Test
-        working-directory: ./nodejs
+        working-directory: ./
         run: npm test
       - name: Upload Pravega standalone logs
         uses: actions/upload-artifact@v2
