@@ -94,9 +94,9 @@ jobs:
             target/
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
 
-      - name: Run code cov
-        run: |
-          chmod +x ./.github/workflows/codecov/codecov.sh
-          ./.github/workflows/codecov/codecov.sh
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
         
