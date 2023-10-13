@@ -73,7 +73,8 @@
         "collectCoverageFrom": [ "**/*.ts",
             "!**/node_modules/**",
             "!**/dist/**"
-        ]
+        ],
+        "coverageReporters": ["text", "cobertura"]
     },
     "binary": {
         "module_name": "pravega",
