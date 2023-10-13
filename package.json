@@ -70,7 +70,10 @@
             "^(\\.{1,2}/.*)\\.js$": "$1"
         },
         "collectCoverage": true,
-        "collectCoverageFrom": ["text", "cobertura"]
+        "collectCoverageFrom": [ "**/*.ts",
+            "!**/node_modules/**",
+            "!**/dist/**"
+        ]
     },
     "binary": {
         "module_name": "pravega",
