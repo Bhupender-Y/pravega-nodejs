@@ -68,6 +68,10 @@ jobs:
           name: pravega-standalone-log
           path: pravega.log
           retention-days: 5
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        env:
+          CODECOV_TOKEN: ${{secrets.CODECOV_TOKEN}}
   code_coverage:
     name: code_coverage
     runs-on: ubuntu-20.04
