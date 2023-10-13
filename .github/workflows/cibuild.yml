@@ -70,5 +70,11 @@ jobs:
           name: pravega-standalone-log
           path: pravega.log
           retention-days: 5
+  code_coverage:
+    name: code_coverage
+    runs-on: ubuntu-20.04
+    needs: test_jest
+    steps:
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
 
-        
