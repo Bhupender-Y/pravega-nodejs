@@ -89,6 +89,6 @@ jobs:
       - name: Download code coverage reports
         uses: actions/download-artifact@v2
       - name: Untar reports
-        run: ( ls reports-*.tzst | xargs -n1 tar --keep-newer-files -xf )
+        run: ( ls */reports-*.tzst | xargs -n1 tar --keep-newer-files -xf )
       - name: Upload to Codecov
         uses: codecov/codecov-action@v1
