@@ -4,9 +4,11 @@ codecov:
 coverage:
   status:
     project:
-      default: off
+      default:
+        threshold: 0.5%
     patch:
-      default: off
+      default:
+        target: 80%
 
 comment:
   layout: "diff, flags, files"
