@@ -61,6 +61,15 @@ jobs:
         run: npm i
       - name: Test
         run: npm test
+      - name: Tar Reports
+        run: tar -cf reports-${{github.job}}.tzst ./coverage
+      - name: Upload Reports
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{github.job}}-reports
+          retention-days: 5
+          path: reports-${{github.job}}.tzst
       - name: Upload Pravega standalone logs
         uses: actions/upload-artifact@v2
         if: always()
@@ -68,16 +77,20 @@ jobs:
           name: pravega-standalone-log
           path: pravega.log
           retention-days: 5
-  code_coverage:
-    name: code_coverage
+  build_and_test_complete:
+    name: CI Complete
+    needs: [test_jest]
     runs-on: ubuntu-20.04
-    needs: test_jest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
         with:
           fetch-depth: 2
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
+      - name: Download code coverage reports
+        uses: actions/download-artifact@v2
+      - name: Untar reports
+        run: ( ls */reports-*.tzst | xargs -n1 tar --keep-newer-files -xf )
+      - name: Upload to Codecov
+        uses: codecov/codecov-action@v1
         env:
           CODECOV_TOKEN: ${{secrets.CODECOV_TOKEN}}

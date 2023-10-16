@@ -74,7 +74,8 @@
             "!**/node_modules/**",
             "!**/dist/**"
         ],
-        "coverageReporters": ["text", "cobertura"]
+        "coverageReporters": ["text", "cobertura"],
+        "coverageDirectory": "./coverage"
     },
     "binary": {
         "module_name": "pravega",
