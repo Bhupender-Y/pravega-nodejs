@@ -92,3 +92,5 @@ jobs:
         run: ( ls */reports-*.tzst | xargs -n1 tar --keep-newer-files -xf )
       - name: Upload to Codecov
         uses: codecov/codecov-action@v1
+        env:
+          CODECOV_TOKEN: ${{secrets.CODECOV_TOKEN}}
