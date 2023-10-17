@@ -66,10 +66,7 @@ describe('Basic test on manager, reader, and writer', () => {
         const events = [...seg_slice].map(event => dec.decode(event.data()));
         assert.equal(events.length, 6);
         events.map(event => assert.equal(event, DATA));
-        // for (const event of seg_slice) {
-        //     const raw_value = event.data();
-        //     console.log(`Event at ${event.offset()} reads ${dec.decode(raw_value)}`);
-        // }
+
         stream_reader.reader_offline();
 
         stream_manager.delete_reader_group(SCOPE, reader_group_name);
